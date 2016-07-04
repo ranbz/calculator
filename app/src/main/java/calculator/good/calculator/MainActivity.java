@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+            
             newNm = Double.parseDouble(currUPto);
 
             switch (textFromButton)
