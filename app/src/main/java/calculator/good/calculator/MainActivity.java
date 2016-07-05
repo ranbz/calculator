@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean firstOpr=false;
-    String  currStr="", currUPto="" ;
-    Double currNm , currSum;
+    public boolean firstOpr=false;
+    public String  currStr = "";
+    public String currUPto="" ;
+    public String lastOP = "";
+    public Double currNm , currSum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void writeTorslt(String Nstr)
+    public void writeTorzlt()
     {
 
-        TextView msgTextView = (TextView) findViewById(R.id.rslt_tv);
-        currStr = currStr + Nstr;
+        TextView msgRsltView = (TextView) findViewById(R.id.rslt_tv);
 
-        Log.d("Tag", currStr);
 
-        msgTextView.setText(currStr);
+        Log.d("Tag", String.valueOf(currSum));
+
+        msgRsltView.setText(String.valueOf(currSum));
 
     }
 
@@ -56,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
     {
         currStr = "";
         currSum = 0.0;
+        lastOP="";
         writeToScr(currStr);
-        writeTorslt(currStr);
+        writeTorzlt();
         firstOpr = false;
 
     }
@@ -67,24 +70,25 @@ public class MainActivity extends AppCompatActivity {
         Button clickedButton= (Button) v;
         Double newNm;
 
-        String textFromButton = clickedButton.getText().toString();
+        String textFromButton1 = clickedButton.getText().toString();
 
-        if (firstOpr == false)
+        if (!firstOpr)
         {
             currSum = Double.parseDouble(currUPto);
+            lastOP = textFromButton1;
         }
         else
         {
-            
+
             newNm = Double.parseDouble(currUPto);
 
-            switch (textFromButton)
+            switch (lastOP)
             {
                 case "/":
                     currSum = currSum / newNm;
 
                     break;
-                case "*":
+                case "X":
                     currSum = currSum * newNm;
 
                     break;
@@ -99,19 +103,20 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+            lastOP = textFromButton1;
+            writeTorzlt();
 
-            writeTorslt(String.valueOf(currSum));
         }
 
-        switch (textFromButton)
+        switch (textFromButton1)
         {
             case "/":
 
                 writeToScr("/");
                 break;
-            case "*":
+            case "X":
 
-                writeToScr("*");
+                writeToScr("X");
                 break;
             case "-":
 
@@ -132,13 +137,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void Ewbtn()
+    {
+        currStr = "";
+        lastOP = "";
+        writeToScr(currStr);
+        writeTorzlt();
+        firstOpr = false;
+
+    }
+
     public void currNbtn(View v)
     {
         Button clickedButton= (Button) v;
 
-        String textFromButton= clickedButton.getText().toString();
-        currUPto = currUPto + textFromButton;
-        writeToScr(textFromButton);
+        String textFromButton2= clickedButton.getText().toString();
+        currUPto = currUPto + textFromButton2;
+        writeToScr(textFromButton2);
 
 
 
